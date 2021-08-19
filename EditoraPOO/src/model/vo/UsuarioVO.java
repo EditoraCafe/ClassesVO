@@ -16,6 +16,7 @@ public class UsuarioVO {
 			// => não tem como acessar => por isso verificar se é nulo 
 			// se for null => não tem como invocar nenhum metodo
 			// começa a garantir a integridade => fazendo as verificações (nos gets não precisa)
+			//
 		}
 		else {
 			if(login.equals("")) { // diferença de null para vazio 
