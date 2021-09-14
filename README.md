@@ -1,2 +1,2 @@
-# ClassesVO
-Implementação das classes da camada Value Object 
+# ClassesDAO
+Implementação das classes DAO
