@@ -1,2 +1,2 @@
-# ClassesVO
-Implementação das classes da camada Value Object 
+# Editora
+Implementação das classes projeto da editora 
