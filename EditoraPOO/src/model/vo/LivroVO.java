@@ -1,11 +1,22 @@
 package model.vo;
 
+<<<<<<< Updated upstream
 public class LivroVO {
 	private String titulo;
 	private String genero;
 	private int ano;
 	private boolean status;
 	private AutorVO autor;
+=======
+
+public class LivroVO extends UsuarioVO {
+	private String titulo;
+	private String genero;
+	private int ano;    
+	private boolean status;
+	private AutorVO autor;
+	private int id; 
+>>>>>>> Stashed changes
 		
 	// garantindo a integridade dos dados para o titulo
 	public String getTitulo() {
@@ -44,6 +55,10 @@ public class LivroVO {
 		}
 	}
 	
+<<<<<<< Updated upstream
+=======
+	
+>>>>>>> Stashed changes
 	// garantindo a integridade dos dados para o ano
 	public int getAno() {
 		return ano;
@@ -56,6 +71,10 @@ public class LivroVO {
 			 System.out.println("Por favor, reveja essa informação");
 	}
 	
+<<<<<<< Updated upstream
+=======
+	
+>>>>>>> Stashed changes
 	// garantindo a integridade dos dados para o status 
 	public boolean isStatus() {
 		return status;
@@ -83,4 +102,21 @@ public class LivroVO {
 			  this.autor = autor;
 		  }
 	}
+<<<<<<< Updated upstream
 }
+=======
+
+	// garantindo a integridade dos dados para o id
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		if(id>0)
+			this.id = id;
+		else 
+			 System.out.println("Por favor, reveja essa informação");
+	}
+
+}
+>>>>>>> Stashed changes

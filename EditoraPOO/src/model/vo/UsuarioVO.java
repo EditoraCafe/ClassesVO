@@ -5,6 +5,10 @@ public class UsuarioVO {
 	private String senha;
 	private String email;
 	private String nickname;
+<<<<<<< Updated upstream
+=======
+	private int id; 
+>>>>>>> Stashed changes
 	
 	/*
 	 fazer esses esquemas de if prar os metodos set (garantir o encapsulamento)
@@ -93,4 +97,19 @@ public class UsuarioVO {
 				this.nickname = nickname;
 		}	
 	}
+<<<<<<< Updated upstream
+=======
+
+	// garantindo a integridade dos dados para o id
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		if(id>0)
+			this.id = id;
+		else 
+			 System.out.println("Por favor, reveja essa informação");
+	}
+>>>>>>> Stashed changes
 }

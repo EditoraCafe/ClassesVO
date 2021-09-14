@@ -1,7 +1,13 @@
 package model.vo;
 
+<<<<<<< Updated upstream
 public class GerenteVO {
       private UsuarioVO usuario;
+=======
+public class GerenteVO extends UsuarioVO {
+      private UsuarioVO usuario;
+      private int id;
+>>>>>>> Stashed changes
 
 	public UsuarioVO getUsuario() {
 		return usuario;
@@ -29,4 +35,20 @@ public class GerenteVO {
 				this.usuario = usuario;
 		}
 	}
+<<<<<<< Updated upstream
 }
+=======
+	
+	// garantindo a integridade dos dados para o id
+		public int getId() {
+			return id;
+		}
+
+		public void setId(int id) {
+			if(id>0)
+				this.id = id;
+			else 
+				 System.out.println("Por favor, reveja essa informação");
+		}
+}
+>>>>>>> Stashed changes
