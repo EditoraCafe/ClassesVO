@@ -17,7 +17,7 @@ public class AvaliadorDAO extends BaseDAO<AvaliadorDAO> {
 			String sql = "insert into Avaliador (cpf, endereco, idUsuario) values (?,?,?)";
 			PreparedStatement ptst;
 			try {
-				ptst = conn.prepareStatement(sql);
+				ptst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				ptst.setString(1, vo.getCpf());
 				ptst.setString(2, vo.getEndereco());
 				ptst.setLong(3, vo.getUsuario().getId());
