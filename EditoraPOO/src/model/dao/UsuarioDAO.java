@@ -9,21 +9,32 @@ import java.util.List;
 
 import model.vo.UsuarioVO;
 
-public class UsuarioDAO extends BaseDAO {
+public class UsuarioDAO<VO extends UsuarioVO> extends BaseDAO<VO> { 
         
-	     // inserir novo usuario 
-         public void inserirUsuario(UsuarioVO vo) {
-        	 con = getConnection();
-        	 // codigo sql
+	     // inserir novo usuario // atualizado
+         public void inserir(VO vo) throws SQLException  {
         	 String sql = "insert into usuario (nome,email,senha,nickname) values (?,?,?,?)";
         	 PreparedStatement ptst;
         	 try {
-				ptst = con.prepareStatement(sql);
+				ptst = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				ptst.setString(1,vo.getNome());
 				ptst.setString(2,vo.getEmail());
 				ptst.setString(3, vo.getSenha());
 				ptst.setString(4, vo.getNickname());
-				ptst.execute();
+				
+				int affectedRows = ptst.executeUpdate();
+				
+				if(affectedRows == 0) {
+					throw new SQLException("A inserção falhou, nenhuma linha foi modificada");
+				}
+		
+				ResultSet generatedKeys = ptst.getGeneratedKeys();
+				if(generatedKeys.next()) {
+					vo.setId(generatedKeys.getInt(1)); 
+				}
+				else {
+					throw new SQLException("A inserção falhou, nenhum id foi retornado");
+				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -31,86 +42,26 @@ public class UsuarioDAO extends BaseDAO {
          }
          
          
-         // remover usuario pelo id  
-          public void removerUsuarioById (UsuarioVO vo) {
-        		 con = getConnection();
-        		 // não é mais insert => agora é delete 
-            	 String sql = "delete from usuario where id = ?";
-            	 PreparedStatement ptst;
+          public void deletar(VO vo) {
+        	  String sql = "delete from usuario where id = ?"; 
+        	  PreparedStatement ptst;
             	 try {
-    				ptst = con.prepareStatement(sql);
+    				ptst = getConnection().prepareStatement(sql);
     				ptst.setInt(1,vo.getId());
     				ptst.executeUpdate();
     			} catch (SQLException e) {
     				// TODO Auto-generated catch block
     				e.printStackTrace();
     			} 
-        	  
-          }
+          }    
           
-          
-          //listar usuarios mostrando id
-          public List<UsuarioVO> listarUsuarios(){
-        	  // vai com statement 
-        	  con = getConnection();
-        	  // o que quer agr no sql é selecionar
-        	  String sql = "select * from usuario ";
-        	  Statement st;
-        	  ResultSet rs;
-        	  List<UsuarioVO> usuarios = new ArrayList<UsuarioVO>();
-        	  
-        	  try {
-        		  st = con.createStatement();
-        		  rs = st.executeQuery(sql);
-				   //ResultSet => vem das consultas de bd
-	        	   // melhor trabalhar com list do que com resultsSet(proprio de bd)
-	        	   // tranformar o resultSet em um list
-        		  while (rs.next()) {  // enquanto tiver um proximo dentro do rs vai sair percorrendo
-              		// percorrer esse ResultSet => tirar todos os dados de cada elemento dele
-        			// e vai colocar dentro de um usuario especifico pra poder adicionar esse usuario em uma lista
-        			// vai ler item por item 
-        			  UsuarioVO vo = new UsuarioVO(); 
-        			  vo.setNome(rs.getString("nome"));
-        			  vo.setEmail(rs.getString("email"));
-        			  vo.setSenha(rs.getString("senha"));
-        			  vo.setNickname(rs.getString("nickname"));
-        			  vo.setId(rs.getInt("id")); 
-        			  usuarios.add(vo);
-              	}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-        	  return usuarios;
-          }
-        	
-          
-          // editando id do usuario pelo nickname 
-          public void editarIdUsuarioByNickname(UsuarioVO vo) {
-     		 con = getConnection(); // getConnection do baseDAO
-     		 // não é mais insert => agora é update 
-         	 String sql = "update usuario set id = ? where nickname =?";
-         	 PreparedStatement ptst;
-         	 try {
- 				ptst = con.prepareStatement(sql);
- 				ptst.setInt(1,vo.getId()); // vai receber um id primerio para editar 
- 				ptst.setString(2,vo.getNickname());
- 				ptst.executeUpdate();
- 			} catch (SQLException e) {
- 				// TODO Auto-generated catch block
- 				e.printStackTrace();
- 			}  
-       }
-          
-          
-          //editando o nome com base no id 
-          public void editarNomeUsuarioById(UsuarioVO vo) {
-        		 con = getConnection(); // getConnection do baseDAO
-        		 // não é mais insert => agora é update 
-            	 String sql = "update usuario set nome = ? where id = ?"; 
+       
+          public void atualizar(VO vo) {
+        	// não é mais insert => agora é update 
+        	  String sql = "update usuario set nome = ? where id = ?";  
             	 PreparedStatement ptst;
             	 try {
-    				ptst = con.prepareStatement(sql);
+            		ptst = getConnection().prepareStatement(sql);
     				ptst.setString(1,vo.getNome()); // vai receber um nome primerio para editar 
     				ptst.setInt(2,vo.getId());
     				ptst.executeUpdate();
@@ -120,58 +71,132 @@ public class UsuarioDAO extends BaseDAO {
     			}  
           }
           
+
+            // atualizado
+          public ResultSet listar() {
+        	  String sql = "select * from usuario";
+        	  Statement st;
+        	  ResultSet rs = null;
+        	  
+        	  try {
+        		  st =  getConnection().createStatement();
+        		  rs = st.executeQuery(sql);
+        	  } catch (SQLException e) {
+  				// TODO Auto-generated catch block
+  				e.printStackTrace();
+  			}  
+        	  return rs;
+          }
           
-          //editando o email com base no id 
-          public void editarEmailUsuarioById(UsuarioVO vo) {
-        		 con = getConnection(); // getConnection do baseDAO
-        		 // não é mais insert => agora é update 
-            	 String sql = "update usuario set email = ? where id = ?"; 
-            	 PreparedStatement ptst;
-            	 try {
-    				ptst = con.prepareStatement(sql);
-    				ptst.setString(1,vo.getEmail());  // recebe um email para editar 
-    				ptst.setInt(2,vo.getId());
-    				ptst.executeUpdate();
-    			} catch (SQLException e) {
-    				// TODO Auto-generated catch block
-    				e.printStackTrace();
-    			}  
+       // atualizado
+          public ResultSet listar2() {
+        	  String sql = "select * from usuario";
+        	  PreparedStatement ptst;
+        	  ResultSet rs = null;
+        	  
+        	  try {
+        		  ptst = getConnection().prepareStatement(sql);
+        		  System.out.println(ptst);
+        		  rs = ptst.executeQuery(sql);
+        		  
+        	  } catch (SQLException e) {
+  				// TODO Auto-generated catch block
+  				e.printStackTrace();
+  			}  
+        	  return rs;
+          }
+          
+          // atualizado
+          public ResultSet listarPorNome(VO vo) {
+        	  String sql = "select * from usuario where nome = ?";
+        	  PreparedStatement ptst;
+        	  ResultSet rs = null;
+        	  
+        	  try {
+        		  ptst = getConnection().prepareStatement(sql);
+        		  ptst.setString(1, vo.getNome());
+        		  rs = ptst.executeQuery();
+        		  
+        	  } catch (SQLException e) {
+  				// TODO Auto-generated catch block
+  				e.printStackTrace();
+  			}  
+        	  return rs;
           }
           
           
-          //editando o nickmane com base no id 
-          public void editarNicknameUsuarioById(UsuarioVO vo) {
-        		 con = getConnection(); // getConnection do baseDAO
-        		 // não é mais insert => agora é update 
-            	 String sql = "update usuario set nickname = ? where id = ?"; 
-            	 PreparedStatement ptst;
-            	 try {
-    				ptst = con.prepareStatement(sql);
-    				ptst.setString(1,vo.getNickname()); 
-    				ptst.setInt(2,vo.getId());
-    				ptst.executeUpdate();
-    			} catch (SQLException e) {
-    				// TODO Auto-generated catch block
-    				e.printStackTrace();
-    			}  
+          // atualizado
+          public ResultSet listarPorId(VO vo) {
+        	  String sql = "select * from usuario where id = ?";
+        	  PreparedStatement ptst;
+        	  ResultSet rs = null;
+        	  
+        	  try {
+        		  ptst = getConnection().prepareStatement(sql);
+        		  ptst.setInt(1, vo.getId());
+        		  System.out.println(ptst);
+        		  rs = ptst.executeQuery();
+        		  
+        	  } catch (SQLException e) {
+  				// TODO Auto-generated catch block
+  				e.printStackTrace();
+  			}  
+        	  return rs;
           }
           
           
-          //editando a senha com base no id 
-          public void editarSenhaUsuarioById(UsuarioVO vo) {
-        		 con = getConnection(); // getConnection do baseDAO
-        		 // não é mais insert => agora é update 
-            	 String sql = "update usuario set senha = ? where id = ?"; 
-            	 PreparedStatement ptst;
-            	 try {
-    				ptst = con.prepareStatement(sql);
-    				ptst.setString(1,vo.getSenha()); 
-    				ptst.setInt(2,vo.getId());
-    				ptst.executeUpdate();
-    			} catch (SQLException e) {
-    				// TODO Auto-generated catch block
-    				e.printStackTrace();
-    			}  
+          // atualizado
+          public ResultSet listarPorEmail(VO vo) {
+        	  String sql = "select * from usuario where email = ?";
+        	  PreparedStatement ptst;
+        	  ResultSet rs = null;
+        	  
+        	  try {
+        		  ptst = getConnection().prepareStatement(sql);
+        		  ptst.setString(1, vo.getEmail());
+        		  rs = ptst.executeQuery();
+        		  
+        	  } catch (SQLException e) {
+  				// TODO Auto-generated catch block
+  				e.printStackTrace();
+  			}  
+        	  return rs;
+          }
+          
+          // atualizado
+          public ResultSet listarPorNickname(VO vo) {
+        	  String sql = "select * from usuario where nickname = ?";
+        	  PreparedStatement ptst;
+        	  ResultSet rs = null;
+        	  
+        	  try {
+        		  ptst = getConnection().prepareStatement(sql);
+        		  ptst.setString(1, vo.getNickname());
+        		  rs = ptst.executeQuery();
+        		  
+        	  } catch (SQLException e) {
+  				// TODO Auto-generated catch block
+  				e.printStackTrace();
+  			}  
+        	  return rs;
+          }
+          
+          // atualizado
+          public ResultSet listarPorSenha(VO vo) {
+        	  String sql = "select * from usuario where senha = ?";
+        	  PreparedStatement ptst;
+        	  ResultSet rs = null;
+        	  
+        	  try {
+        		  ptst = getConnection().prepareStatement(sql);
+        		  ptst.setString(1, vo.getSenha());
+        		  rs = ptst.executeQuery();
+        		  
+        	  } catch (SQLException e) {
+  				// TODO Auto-generated catch block
+  				e.printStackTrace();
+  			}  
+        	  return rs;
           }
 }
 
