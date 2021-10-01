@@ -10,9 +10,9 @@ import java.util.List;
 import VO.AvaliadorVO;
 import VO.UsuarioVO;
 
-public class AvaliadorDAO extends BaseDAO {
-	
-	public void inserir(AvaliadorVO vo) throws SQLException {
+public class AvaliadorDAO extends BaseDAO<AvaliadorDAO> {
+	@Override
+	public void inserir(VO vo) throws SQLException {
 			conn = getConnection();
 			String sql = "insert into Avaliador (cpf, endereco, idUsuario) values (?,?,?)";
 			PreparedStatement ptst;
@@ -22,13 +22,23 @@ public class AvaliadorDAO extends BaseDAO {
 				ptst.setString(2, vo.getEndereco());
 				ptst.setLong(3, vo.getUsuario().getId());
 				ptst.execute();
+				int affectedRows = ptst.executeUpdate();
+				if(affectedRows == 0) {
+					throws new SQLException('A inserção falhou!');
+				}
+				ResultSet generatedKeys = ptst.getGeneratedKeys();
+				if(generatedKeys.next()){
+					vo.setIDFunc(generatedKeys.getLong(1));
+				} else {
+					throws new SQLException('A inserção falhou!');
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 			
 		}
-
-		public void remover(AvaliadorVO vo) throws SQLException {
+		@Override
+		public void remover(VO vo) throws SQLException {
 			conn = getConnection();
 			String sql = "delete from Avaliador where id = ?";
 			PreparedStatement ptst;
@@ -40,36 +50,26 @@ public class AvaliadorDAO extends BaseDAO {
 				e.printStackTrace();
 			}
 		}
-
-		public List<AvaliadorVO> listar() throws SQLException {
+		@Override
+		public ResultSet listar(VO vo) throws SQLException {
 			conn = getConnection();
 			String sql = "select * from Avaliador";
 			Statement st;
 			ResultSet rs;
-			List<AvaliadorVO> Avaliadores = new ArrayList<AvaliadorVO>();
 			
 			try {
 				st = conn.createStatement();
 				rs = st.executeQuery(sql);
-				while(rs.next()){
-					AvaliadorVO vo = new AvaliadorVO(null, null, null);
-					vo.setCpf(rs.getString("cpf"));
-					vo.setEndereco(rs.getString("endereco"));
-					vo.setId(rs.getLong("id"));
-					UsuarioDAO user = new UsuarioDAO();
-					UsuarioVO uservo = user.getUsuario(rs.getLong("idUsuario"));
-					vo.setUsuario(uservo);
-					Avaliadores.add(vo);
-				}
+				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			return Avaliadores;
+			return rs;
 			
 		}
 
-
-		public void editar(AvaliadorVO vo) throws SQLException {
+		@Override
+		public void editar(VO vo) throws SQLException {
 			conn = getConnection();
 			String sql = "update from Avaliador set cpf = ?, endereco = ?, idUsuario = ? where id = ?";
 			PreparedStatement ptst;
