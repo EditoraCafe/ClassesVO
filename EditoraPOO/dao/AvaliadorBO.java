@@ -8,8 +8,7 @@ import java.util.List;
 import exceptions.InsertException;
 import model.dao.AvaliadorDAO;
 import model.vo.AvaliadorVO;
-import model.dao.UsuarioDAO;
-import model.vo.UsuarioVO;
+
 
 public class AvaliadorBO implements BaseInterBO<AvaliadorVO> {
 	BaseInterDAO<AvaliadorVO> dao = new AvaliadorDAO();
