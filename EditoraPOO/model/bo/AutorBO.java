@@ -8,8 +8,6 @@ import java.util.List;
 import exceptions.InsertException;
 import model.dao.AutorDAO;
 import model.vo.AutorVO;
-import model.dao.UsuarioDAO;
-import model.vo.UsuarioVO;
 
 public class AutorBO implements BaseInterBO<AutorVO> {
 	BaseInterDAO<AutorVO> dao = new AutorDAO();
