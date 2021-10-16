@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #DEB887;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FrontController">
+   <children>
+      <Label layoutX="39.0" layoutY="39.0" text="Obras">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="41.0" layoutY="67.0" text="Lista de obras" />
+      <Button layoutX="403.0" layoutY="35.0" mnemonicParsing="false" style="-fx-background-color: #FBC676;;" text="Cadastrar nova obra " />
+      <Button layoutX="427.0" layoutY="72.0" mnemonicParsing="false" style="-fx-background-color: #FBC676;;" text="Filtrar obras" />
+      <TitledPane animated="false" layoutX="35.0" layoutY="116.0" prefHeight="206.0" prefWidth="538.0" text="Obras">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="423.0">
+               <children>
+                  <TableView editable="true" layoutX="-14.0" layoutY="-1.0" prefHeight="187.0" prefWidth="551.0">
+                    <columns>
+                      <TableColumn prefWidth="144.0" text="Título" />
+                      <TableColumn prefWidth="106.0" text="Gênero" />
+                        <TableColumn prefWidth="63.0" text="Ano" />
+                        <TableColumn prefWidth="124.0" text="Autor" />
+                        <TableColumn prefWidth="113.0" text="Status" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
+   </children>
+</Pane>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #DEB887;;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FrontController">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="276.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../../../../OneDrive/Área%20de%20Trabalho/javaFx%20cenas%20trabalho%20poo/WhatsApp%20Image%202021-10-11%20at%202.jpeg" />
+         </image>
+      </ImageView>
+      <Label layoutX="319.0" layoutY="45.0" text="EDITORA LIVROS E CAFÉ" />
+      <Label layoutX="319.0" layoutY="72.0" text="Bem-vindo, administrador " />
+      <Label layoutX="319.0" layoutY="100.0" text="O que deseja fazer, cadastrar, alterar ou excluir?" />
+      <ImageView fitHeight="48.0" fitWidth="41.0" layoutX="350.0" layoutY="139.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../Downloads/image%2037.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="48.0" fitWidth="41.0" layoutX="353.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../Downloads/lendo-um-livro%201.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="48.0" fitWidth="41.0" layoutX="353.0" layoutY="254.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../Downloads/image%2038.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="48.0" fitWidth="41.0" layoutX="352.0" layoutY="315.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../Downloads/image%2049.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="420.0" layoutY="148.0" mnemonicParsing="false" style="-fx-background-color: #DEB887;" text="Autores" />
+      <Button layoutX="420.0" layoutY="208.0" mnemonicParsing="false" style="-fx-background-color: #DEB887;" text="Obras" />
+      <Button layoutX="420.0" layoutY="262.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #DEB887;" text="Avaliadores" />
+      <Button layoutX="428.0" layoutY="327.0" mnemonicParsing="false" style="-fx-background-color: #DEB887;" text="Relatório" />
+   </children>
+</Pane>
