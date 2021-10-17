@@ -56,8 +56,49 @@ public class Telas extends Application  {
 		 
 		 primaryStage.setScene(cena);
 	 }
+	
+	//adicionado demais telas
+	
+	public static void telaAlteracaoAutor() throws Exception{ 
+		 Parent root = FXMLLoader.load(Telas.class.getResource("VE/telaAlteracaoAutor.fxml"));
+		 
+		 Scene cena = new Scene(root); 
+		 
+		 primaryStage.setScene(cena);
+	 }
+	
+	public static void telaAlteracaoAvaliador() throws Exception{ 
+		 Parent root = FXMLLoader.load(Telas.class.getResource("VE/telaAlteracaoAvaliador.fxml"));
+		 
+		 Scene cena = new Scene(root); 
+		 
+		 primaryStage.setScene(cena);
+	 }
 	 
-	 
+	 public static void telaCadastroAutor() throws Exception{ 
+		 Parent root = FXMLLoader.load(Telas.class.getResource("VE/telaCadastroAutor.fxml"));
+		 
+		 Scene cena = new Scene(root); 
+		 
+		 primaryStage.setScene(cena);
+	 }
+	
+	public static void telaCadastroAvaliador() throws Exception{ 
+		 Parent root = FXMLLoader.load(Telas.class.getResource("VE/telaCadastroAvaliador.fxml"));
+		 
+		 Scene cena = new Scene(root); 
+		 
+		 primaryStage.setScene(cena);
+	 }
+	
+	public static void telaGerenciarAvaliacoes() throws Exception{ 
+		 Parent root = FXMLLoader.load(Telas.class.getResource("VE/telaGerenciarAvaliacoes.fxml"));
+		 
+		 Scene cena = new Scene(root); 
+		 
+		 primaryStage.setScene(cena);
+	 }
+	
 	 public static void main(String[] args) {
 			launch();
 		} 
